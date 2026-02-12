@@ -1,53 +1,67 @@
 import streamlit as st
+import pandas as pd
 
-# Cấu hình trang
-st.set_page_config(page_title="Học Lái Xe Online", page_icon="🚗")
+# Cấu hình trang web
+st.set_page_config(page_title="Dạy Lái Xe Phương Thúy", page_icon="🚗", layout="wide")
 
-# --- MENU BÊN TRÁI ---
-st.sidebar.title("DANH MỤC")
-menu = st.sidebar.selectbox("Chọn tính năng:", ["Giới thiệu", "Thi thử lý thuyết", "Liên hệ"])
+# --- THANH MENU BÊN TRÁI ---
+st.sidebar.title("DANH MỤC CHÍNH")
+# Thêm mục "Bảng giá" vào menu
+menu = st.sidebar.radio("Chọn mục:", ["Giới thiệu", "Bảng giá", "Thi thử lý thuyết", "Liên hệ"])
 
-# --- PHẦN 1: GIỚI THIỆU ---
+# --- TRANG: GIỚI THIỆU ---
 if menu == "Giới thiệu":
-    st.title("🚗 Trung Tâm Đào Tạo Lái Xe")
-    st.write("Chào mừng bạn! Web này giúp bạn ôn tập 600 câu hỏi lý thuyết dễ dàng nhất.")
-    st.image("https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800")
+    st.title("🚗 TRUNG TÂM ĐÀO TẠO LÁI XE PHƯƠNG THÚY")
+    st.write("Cung cấp dịch vụ ôn luyện lý thuyết chuyên sâu và hồ sơ thi sát hạch uy tín.")
+    st.image("https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800")
+    st.info(f"📍 Địa chỉ: Khóm 8, P7, Thành Phố Trà Vinh")
 
-# --- PHẦN 2: THI THỬ LÝ THUYẾT ---
-elif menu == "Thi thử lý thuyết":
-    st.title("✍️ Kiểm tra kiến thức")
-    st.info("Hãy chọn đáp án đúng cho các câu hỏi dưới đây:")
+# --- TRANG: BẢNG GIÁ (Thông tin từ file docx của bạn) ---
+elif menu == "Bảng giá":
+    st.title("💰 BẢNG BÁO GIÁ DỊCH VỤ")
+    st.write("Kính gửi Quý học viên thông tin chi tiết các gói ôn luyện và hồ sơ đăng ký thi:")
 
-    # Câu hỏi 1
-    st.subheader("Câu 1: Khi gặp biển báo 'Cấm đi ngược chiều', bạn phải làm gì?")
-    cau1 = st.radio("Chọn đáp án:", 
-                    ["Đi chậm lại rồi đi tiếp", 
-                     "Không được đi vào đường đó", 
-                     "Được đi vào nếu là xe máy"], key="q1")
+    # 1. Gói VIP
+    st.subheader("I. Gói Ôn Luyện Lý Thuyết Chuyên Sâu (VIP)")
+    st.write("Dành cho học viên cần kèm riêng, đảm bảo kiến thức vững chắc.")
+    data_vip = {
+        "Hạng Mục": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B1, B2, C1)"],
+        "Mô Tả": ["Kèm cặp sát sao, hướng dẫn mẹo thi", "Hướng dẫn phương pháp làm bài trên máy tính"],
+        "Đơn Giá (VNĐ)": ["2.000.000 đ", "2.500.000 đ"]
+    }
+    st.table(data_vip)
+
+    # 2. Gói Tiêu Chuẩn
+    st.subheader("II. Gói Tiêu Chuẩn (Học phí + Phí nộp hồ sơ)")
+    data_tc = {
+        "Hạng Xe": ["Hạng A1 (Xe máy dưới 175cc)", "Hạng A (Mô tô trên 175cc)"],
+        "Chi Tiết": ["Học phí: 240k + Hồ sơ: 560k", "Học phí: 1.400k + Hồ sơ: 800k"],
+        "Trọn Gói (VNĐ)": ["800.000 đ", "2.200.000 đ"]
+    }
+    st.table(data_tc)
     
-    # Câu hỏi 2
-    st.subheader("Câu 2: Người lái xe phải làm gì khi điều khiển xe ra khỏi đường cao tốc?")
-    cau2 = st.radio("Chọn đáp án:", 
-                    ["Phải thực hiện chuyển dần sang làn đường bên phải", 
-                     "Phanh gấp để rẽ", 
-                     "Quay đầu xe lại"], key="q2")
+    st.warning("⚠️ Lưu ý: Giá trên chưa bao gồm VAT và lệ phí thi sát hạch tại sân.")
 
-    # Nút chấm điểm
-    if st.button("Nộp bài và xem kết quả"):
-        score = 0
-        if cau1 == "Không được đi vào đường đó": score += 5
-        if cau2 == "Phải thực hiện chuyển dần sang làn đường bên phải": score += 5
-        
-        st.write(f"### Tổng điểm của bạn: {score}/10")
-        if score == 10:
-            st.balloons()
-            st.success("Xuất sắc! Bạn đã nắm vững kiến thức.")
-        else:
-            st.warning("Bạn cần ôn tập thêm một chút nhé!")
+    # 3. Hồ sơ cần chuẩn bị
+    st.subheader("📋 Hồ sơ đăng ký cần chuẩn bị")
+    st.write("- 01 Bản CMND/CCCD (không cần công chứng).")
+    st.write("- 01 Giấy khám sức khỏe dành cho người lái xe.")
+    st.write("- 06 Ảnh thẻ 3x4 nền xanh (chụp trực tiếp tại trung tâm).")
 
-# --- PHẦN 3: LIÊN HỆ ---
+# --- TRANG: THI THỬ ---
+elif menu == "Thi thử lý thuyết":
+    st.title("✍️ Thi Thử Lý Thuyết")
+    st.write("Tính năng này đang được kết nối với ngân hàng 600 câu hỏi...")
+    # (Bạn có thể giữ code phần 600 câu ở đây nếu đã làm ở bước trước)
+
+# --- TRANG: LIÊN HỆ ---
 elif menu == "Liên hệ":
-    st.title("📞 Hỗ trợ học viên")
-    st.write("Nếu có thắc mắc về hồ sơ hoặc lịch thi, hãy liên hệ:")
-    st.write("- **Zalo:** 0939.838.175")
-    st.success("Hỗ trợ trực tuyến 24/7")
+    st.title("📞 Thông Tin Liên Hệ")
+    st.success("Hỗ trợ tư vấn trực tuyến 24/7")
+    st.write("**Hotline/Zalo:** 0939.838.175")
+    st.write("**Hỗ trợ viên:** Tuấn (Dịch vụ công trực tuyến)")
+    st.write("**Địa chỉ:** Khóm 8, P7, Thành Phố Trà Vinh")
+
+# Chân trang
+st.markdown("---")
+st.caption("© 2026 Phương Thúy - Tận tâm vì sự an toàn của bạn.")
