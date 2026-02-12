@@ -1,76 +1,77 @@
 import streamlit as st
 import pandas as pd
 
-# Cấu hình trang web
+# Cấu hình trang
 st.set_page_config(page_title="Dạy Lái Xe Phương Thúy", page_icon="🚗", layout="wide")
 
-# --- THANH MENU BÊN TRÁI ---
-st.sidebar.title("DANH MỤC CHÍNH")
-# Thêm "Giờ học" vào danh sách menu
-menu = st.sidebar.radio("Chọn mục:", ["Giới thiệu", "Bảng giá", "Giờ học", "Thi thử lý thuyết", "Liên hệ"])
+# --- PHẦN ĐẦU TRANG ---
+[cite_start]st.title("🚗 HỆ THỐNG ĐÀO TẠO LÁI XE PHƯƠNG THÚY") [cite: 2]
+[cite_start]st.write(f"📍 Địa chỉ: Khóm 8, P7, Thành Phố Trà Vinh") [cite: 3]
 
-# --- TRANG: GIỚI THIỆU ---
-if menu == "Giới thiệu":
-    st.title("🚗 TRUNG TÂM ĐÀO TẠO LÁI XE PHƯƠNG THÚY")
-    st.write("Cung cấp dịch vụ ôn luyện lý thuyết chuyên sâu và hồ sơ thi sát hạch uy tín.")
-    st.image("https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800")
-    st.info(f"📍 Địa chỉ: Khóm 8, P7, Thành Phố Trà Vinh") # [cite: 3]
+# --- MENU HÀNG NGANG (Thay thế cho Sidebar) ---
+# Tạo 5 tab tương ứng với 5 mục chính
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["🏠 Giới thiệu", "💰 Bảng giá", "⏰ Giờ học", "✍️ Thi thử", "📞 Liên hệ"])
 
-# --- TRANG: BẢNG GIÁ ---
-elif menu == "Bảng giá":
-    st.title("💰 BẢNG BÁO GIÁ DỊCH VỤ") # [cite: 5]
-    st.write("Kính gửi Quý học viên thông tin chi tiết các gói ôn luyện và hồ sơ đăng ký thi:") # [cite: 7, 8]
+# --- NỘI DUNG TỪNG TAB ---
 
+with tab1:
+    st.header("Chào mừng bạn đến với trung tâm!")
+    [cite_start]st.write("Chúng tôi xin gửi đến Quý khách các gói dịch vụ ôn luyện lý thuyết và hồ sơ đăng ký thi sát hạch lái xe máy và ô tô chất lượng nhất.") [cite: 8]
+    st.image("https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800")
+    [cite_start]st.info("💡 Mẹo: Học viên sẽ được hướng dẫn mẹo ghi nhớ và phương pháp làm bài thi hiệu quả trên máy tính.") [cite: 15]
+
+with tab2:
+    [cite_start]st.header("💰 Bảng báo giá dịch vụ") [cite: 5]
+    
     # Gói VIP
-    st.subheader("I. Gói Ôn Luyện Lý Thuyết Chuyên Sâu (VIP)") # [cite: 10]
-    st.write("Dành cho học viên cần kèm riêng, đảm bảo kiến thức vững chắc.") # [cite: 10]
+    [cite_start]st.subheader("I. Gói Ôn Luyện Lý Thuyết Chuyên Sâu (VIP)") [cite: 10]
+    [cite_start]st.write("Dành cho học viên cần kèm riêng, đảm bảo kiến thức vững chắc để thi đỗ.") [cite: 10]
     data_vip = {
-        "Hạng Mục": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B1, B2, C1)"],
-        "Đơn Giá (VNĐ)": ["2.000.000 đ", "2.500.000 đ"] # [cite: 10]
+        [cite_start]"Hạng Mục": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B1, B2, C1)"], [cite: 10]
+        [cite_start]"Mô Tả": ["Áp dụng cho các hạng A1, A", "Áp dụng cho các hạng B0.1, B1, B2, C1"], [cite: 10]
+        [cite_start]"Đơn Giá (VNĐ)": ["2.000.000 đ", "2.500.000 đ"] [cite: 10]
     }
     st.table(data_vip)
 
     # Gói Tiêu Chuẩn
-    st.subheader("II. Gói Tiêu Chuẩn (Học phí + Phí nộp hồ sơ)") # [cite: 10]
+    [cite_start]st.subheader("II. Gói Tiêu Chuẩn (Học phí + Phí nộp hồ sơ)") [cite: 10]
     data_tc = {
-        "Hạng Xe": ["Hạng A1 (Xe máy dưới 175cc)", "Hạng A (Mô tô trên 175cc)"],
-        "Trọn Gói (VNĐ)": ["800.000 đ", "2.200.000 đ"] # [cite: 10]
+        [cite_start]"Hạng Xe": ["Hạng A1 (Xe máy dưới 175cc)", "Hạng A (Mô tô trên 175cc)"], [cite: 10]
+        [cite_start]"Học phí": ["240.000 đ", "1.400.000 đ"], [cite: 10]
+        [cite_start]"Phí nộp hồ sơ": ["560.000 đ", "800.000 đ"], [cite: 10]
+        [cite_start]"Trọn Gói (VNĐ)": ["800.000 đ", "2.200.000 đ"] [cite: 10]
     }
     st.table(data_tc)
     
-    st.warning("⚠️ Lưu ý: Giá trên chưa bao gồm VAT và lệ phí thi sát hạch tại sân.") # [cite: 11, 19]
+    [cite_start]st.warning("⚠️ Lưu ý: Giá trên chưa bao gồm VAT, lệ phí thi sát hạch và lệ phí cấp bằng nộp tại sân thi.") [cite: 11, 19]
 
-# --- TRANG: GIỜ HỌC (Thông tin từ ảnh thoigianhoatdong.jpg) ---
-elif menu == "Giờ học":
-    st.title("⏰ THỜI GIAN HỌC & LÀM VIỆC")
-    
+    st.subheader("📋 Hồ sơ cần chuẩn bị")
+    [cite_start]st.write("* 01 Bản CMND/CCCD (không cần công chứng).") [cite: 21]
+    [cite_start]st.write("* 01 Giấy khám sức khỏe dành cho người lái xe.") [cite: 22]
+    [cite_start]st.write("* 06 Ảnh thẻ 3x4 nền xanh (chụp trực tiếp tại trung tâm).") [cite: 23]
+
+with tab3:
+    st.header("⏰ Thời gian học và làm việc")
     col1, col2 = st.columns(2)
-    
     with col1:
-        st.info("### 📅 Ngày làm việc")
-        st.write("**Từ Thứ 2 đến Thứ 7 hàng tuần.**")
-        
-        st.success("### 🕒 Giờ làm việc")
-        st.write("* **Sáng:** 08:00 - 11:00")
-        st.write("* **Chiều:** 13:00 - 17:00")
-        
+        st.info("📅 **Ngày làm việc:** Từ Thứ 2 đến Thứ 7 hàng tuần.")
+        st.success("🕒 **Giờ làm việc:** Sáng: 08:00 - 11:00 | Chiều: 13:00 - 17:00")
     with col2:
-        st.warning("### 🎓 Hình thức học")
-        st.write("**Linh hoạt, sắp xếp theo lịch của học viên.**")
-        st.write("Học viên được kèm cặp sát sao, hướng dẫn mẹo ghi nhớ hiệu quả.") # 
+        [cite_start]st.warning("🎓 **Hình thức học:** Linh hoạt, sắp xếp theo lịch của học viên.") [cite: 14]
+        [cite_start]st.write("Được cung cấp tài liệu, phần mềm ôn thi chuẩn của Cục đường bộ.") [cite: 16]
 
-# --- TRANG: THI THỬ ---
-elif menu == "Thi thử lý thuyết":
-    st.title("✍️ Thi Thử Lý Thuyết")
-    st.info("Hệ thống đang cập nhật ngân hàng 600 câu hỏi...")
+with tab4:
+    st.header("✍️ Ôn tập 600 câu hỏi")
+    st.write("Hệ thống thi thử đang được kết nối với dữ liệu câu hỏi...")
+    # Phần này bạn có thể giữ code bộ câu hỏi trắc nghiệm đã làm ở bước trước
 
-# --- TRANG: LIÊN HỆ ---
-elif menu == "Liên hệ":
-    st.title("📞 Thông Tin Liên Hệ")
-    st.write("**Chủ trung tâm:** Phương Thúy") # [cite: 2]
-    st.write("**Hotline/Zalo:** 0939.838.175") # [cite: 4, 24]
-    st.write("**Địa chỉ:** Khóm 8, P7, Thành Phố Trà Vinh") # [cite: 3]
+with tab5:
+    st.header("📞 Thông tin liên hệ")
+    [cite_start]st.write("**Giảng viên:** Phương Thúy") [cite: 2]
+    [cite_start]st.write("**Hotline/Zalo:** 0939.838.175") [cite: 4, 24]
+    [cite_start]st.write("**Địa chỉ:** Khóm 8, P7, Thành Phố Trà Vinh") [cite: 3]
+    st.write("**Hỗ trợ:** Tư vấn dịch vụ công trực tuyến (Hộ chiếu, Lý lịch tư pháp, Đổi bằng lái).")
 
-# Chân trang
+# --- CHÂN TRANG ---
 st.markdown("---")
-st.caption("© 2026 Phương Thúy - Tận tâm vì sự an toàn của bạn.")
+st.caption("© 2026 Trung Tâm Đào Tạo Lái Xe Phương Thúy - Uy tín và Tận tâm.")
