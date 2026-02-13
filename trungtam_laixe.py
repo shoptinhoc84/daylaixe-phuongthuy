@@ -53,13 +53,13 @@ with tab4:
         st.subheader("🛵 Hạng Xe Máy")
         st.write("Bộ đề ôn tập 250 câu hỏi luật giao thông đường bộ mới nhất.")
         # BẠN THAY LINK CỦA BẠN VÀO DÒNG DƯỚI ĐÂY
-        st.link_button("Học 250 Câu Xe Máy", "https://duong-link-250-cau-cua-ban.com")
+        st.link_button("Học 250 Câu Xe Máy", "https://daotaolaixehd.com.vn/bo-de-250-cau-ly-thuyet-thi-lai-xe-may")
         
     with col_oto:
         st.subheader("🚗 Hạng Ô Tô")
         st.write("Bộ đề ôn tập 600 câu hỏi dành cho các hạng bằng B1, B2, C, D, E.")
         # BẠN THAY LINK CỦA BẠN VÀO DÒNG DƯỚI ĐÂY
-        st.link_button("Học 600 Câu Xe Ô Tô", "https://duong-link-600-cau-cua-ban.com")
+        st.link_button("Học 600 Câu Xe Ô Tô", "https://daotaolaixehd.com.vn/600-cau-hoc-ly-thuyet-thi-lai-xe")
 
 with tab5:
     st.header("✍️ Thi thử tại web")
@@ -73,3 +73,4 @@ with tab6:
 
 st.markdown("---")
 st.caption("© 2026 Phương Thúy - Tận tâm và Uy tín.")
+
