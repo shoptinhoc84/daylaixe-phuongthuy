@@ -185,4 +185,6 @@ with tab6:
 # --- FOOTER ---
 st.markdown("---")
 st.markdown(
-    "<div style='text-align: center; color: grey;'>© 2026 Hệ Thống Đào
+    "<div style='text-align: center; color: grey;'>© 2026 Hệ Thống Đào Tạo Lái Xe Phương Thúy - Uy Tín Tạo Nên Thương Hiệu</div>", 
+    unsafe_allow_html=True
+)
