@@ -124,12 +124,12 @@ with tab2:
 
     with st.container(border=True):
         st.subheader("🅰️ GÓI VIP: ÔN LÝ THUYẾT (KÈM RIÊNG)")
-        st.info("💡 **Quyền lợi:** Học 1 kèm 1, bao đậu lý thuyết, tặng phần mềm ôn thi.")
+        st.info("💡 **Quyền lợi:** Học 1 kèm 1, học là đậu lý thuyết, tặng phần mềm ôn thi.")
         
         # Dữ liệu bảng VIP
         df_vip = pd.DataFrame({
-            "DỊCH VỤ": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B1, B2, C1)"],
-            "ĐỐI TƯỢNG": ["Học viên thi A1, A", "Học viên thi B1, B2, C1"],
+            "DỊCH VỤ": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B.01, B, C1)"],
+            "ĐỐI TƯỢNG": ["Học viên thi A1, A", "Học viên thi B.01, B, C1"],
             "CHI PHÍ": ["2.000.000 đ", "2.500.000 đ"]
         })
         st.table(df_vip)
@@ -213,3 +213,4 @@ with tab6:
 # --- FOOTER ---
 st.markdown("---")
 st.markdown("<div style='text-align: center; color: grey;'>© 2026 Hệ Thống Đào Tạo Lái Xe Phương Thúy</div>", unsafe_allow_html=True)
+
