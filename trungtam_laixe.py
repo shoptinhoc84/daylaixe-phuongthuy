@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 
-# --- 1. CẤU HÌNH TRANG (Bắt buộc phải nằm đầu tiên) ---
+# --- 1. CẤU HÌNH TRANG (Luôn để đầu tiên) ---
 st.set_page_config(
     page_title="Dạy Lái Xe Phương Thúy",
     page_icon="🚗",
@@ -10,63 +10,78 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- 2. CSS TÙY CHỈNH (Làm đẹp Menu & Giao diện) ---
+# --- 2. CSS TÙY CHỈNH (NÂNG CẤP GIAO DIỆN TO - RÕ) ---
 st.markdown("""
     <style>
-        /* Import font chữ hiện đại */
+        /* Import font chữ chuẩn đẹp */
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
         
         html, body, [class*="css"] {
             font-family: 'Roboto', sans-serif;
         }
         
-        /* Màu tiêu đề chính */
-        h1, h2, h3 {
-            color: #004e92;
-            font-weight: 800;
-        }
+        /* --- TIÊU ĐỀ --- */
+        h1, h2, h3 { color: #004e92; font-weight: 800; }
 
-        /* --- TÙY CHỈNH MENU TAB (To - Rõ - Đẹp) --- */
-        
-        /* Chỉnh kích thước chữ trong Tab to lên */
+        /* --- MENU TABS (TO & ĐẸP) --- */
         .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
-            font-size: 1.25rem; /* Cỡ chữ to khoảng 20px */
-            font-weight: 700;   /* Chữ đậm */
+            font-size: 1.3rem; /* Cỡ chữ Menu to */
+            font-weight: 700;
         }
-
-        /* Màu chữ mặc định của Tab */
-        .stTabs [data-baseweb="tab-list"] button {
-            color: #004e92; /* Xanh đậm thương hiệu */
-        }
-
-        /* Hiệu ứng khi rê chuột vào (Hover) */
+        .stTabs [data-baseweb="tab-list"] button { color: #004e92; }
         .stTabs [data-baseweb="tab-list"] button:hover {
-            color: #ff4b4b; /* Đổi màu đỏ */
-            background-color: #f0f8ff; /* Nền xanh nhạt */
+            color: #ff4b4b; background-color: #f0f8ff;
         }
-
-        /* Tab đang được chọn (Active) */
         .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
-            border-bottom-color: #ff4b4b !important; /* Gạch chân màu đỏ */
-            border-bottom-width: 4px !important;
+            border-bottom-color: #ff4b4b !important; border-bottom-width: 4px !important;
         }
 
-        /* Các khung viền trang trí khác */
+        /* --- NỘI DUNG VĂN BẢN (CHỈNH SỬA MỚI) --- */
+        
+        /* 1. Tăng cỡ chữ cho toàn bộ nội dung văn bản (Lịch học, thông báo...) */
+        div[class*="stMarkdown"] p, div[class*="stMarkdown"] li, .stAlert {
+            font-size: 1.25rem !important; /* Chữ to ~20px đọc cực rõ */
+            line-height: 1.6 !important;    /* Giãn dòng cho thoáng */
+            color: #333333;                 /* Màu chữ đen rõ nét */
+        }
+
+        /* 2. Tùy chỉnh Bảng Giá (Table) cho đẹp và to */
+        div[data-testid="stTable"] table {
+            font-size: 1.25rem !important; /* Chữ trong bảng to lên */
+            width: 100%;
+        }
+        div[data-testid="stTable"] th {
+            background-color: #004e92 !important; /* Tiêu đề bảng màu xanh */
+            color: white !important;              /* Chữ trắng nổi bật */
+            font-size: 1.3rem !important;
+            padding: 12px !important;
+        }
+        div[data-testid="stTable"] td {
+            padding: 12px !important;             /* Giãn cách các ô cho thoáng */
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        /* 3. Hiệu ứng khi rê chuột vào dòng trong bảng */
+        div[data-testid="stTable"] tr:hover td {
+            background-color: #f0f8ff;            /* Đổi màu nền nhẹ khi chỉ vào */
+            cursor: pointer;
+        }
+
+        /* --- KHUNG LIÊN HỆ --- */
         .contact-box {
-            background-color: #f0f8ff;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid #004e92;
+            background-color: #e8f4fd;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 8px solid #004e92;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
     </style>
 """, unsafe_allow_html=True)
 
 # --- 3. HÀM KIỂM TRA ẢNH AN TOÀN ---
 def hien_thi_anh(ten_file, caption=None):
-    # Kiểm tra cả 2 trường hợp: nằm ngay bên ngoài hoặc nằm trong thư mục images
     duong_dan_1 = ten_file
     duong_dan_2 = f"images/{ten_file}"
-    
     if os.path.exists(duong_dan_1):
         st.image(duong_dan_1, caption=caption, use_container_width=True)
     elif os.path.exists(duong_dan_2):
@@ -81,14 +96,9 @@ st.title("🚗 HỆ THỐNG ĐÀO TẠO LÁI XE PHƯƠNG THÚY")
 st.markdown("**📍 Địa chỉ:** Khóm 8, P7, Thành Phố Trà Vinh | **📞 Hotline:** 0939.838.175")
 st.divider()
 
-# Menu Chính (Tabs)
+# Menu Chính
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-    "🏠 TRANG CHỦ", 
-    "💰 BẢNG GIÁ", 
-    "⏰ LỊCH HỌC", 
-    "📖 HỌC ONLINE", 
-    "✍️ THI THỬ", 
-    "📞 LIÊN HỆ"
+    "🏠 TRANG CHỦ", "💰 BẢNG GIÁ", "⏰ LỊCH HỌC", "📖 HỌC ONLINE", "✍️ THI THỬ", "📞 LIÊN HỆ"
 ])
 
 # --- TAB 1: TRANG CHỦ ---
@@ -107,56 +117,68 @@ with tab1:
         hien_thi_anh("3.jpg", caption="Phòng Máy Hiện Đại")
         st.warning("Hệ thống máy tính cấu hình cao, phần mềm thi sát hạch chuẩn.")
 
-# --- TAB 2: BẢNG GIÁ ---
+# --- TAB 2: BẢNG GIÁ (CHỮ TO - RÕ) ---
 with tab2:
     st.header("💰 Bảng Báo Giá Dịch Vụ")
-    st.caption("Lưu ý: Giá trên chưa bao gồm VAT (nếu cần xuất hóa đơn).")
+    st.caption("Lưu ý: Giá trên chưa bao gồm VAT.")
 
-    # Mục A: Gói VIP
     with st.container(border=True):
-        st.subheader("🅰️ GÓI VIP: ÔN LUYỆN LÝ THUYẾT CHUYÊN SÂU")
-        st.info("💡 **Quyền lợi:** Học kèm riêng 1-1, đảm bảo kiến thức vững chắc, cung cấp tài liệu & phần mềm chuẩn.")
+        st.subheader("🅰️ GÓI VIP: ÔN LÝ THUYẾT (KÈM RIÊNG)")
+        st.info("💡 **Quyền lợi:** Học 1 kèm 1, bao đậu lý thuyết, tặng phần mềm ôn thi.")
         
+        # Dữ liệu bảng VIP
         df_vip = pd.DataFrame({
-            "Hạng Mục": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B1, B2, C1)"],
-            "Đối Tượng": ["Học viên thi A1, A", "Học viên thi B1, B2, C1"],
-            "Đơn Giá": ["2.000.000 đ", "2.500.000 đ"]
+            "DỊCH VỤ": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B1, B2, C1)"],
+            "ĐỐI TƯỢNG": ["Học viên thi A1, A", "Học viên thi B1, B2, C1"],
+            "CHI PHÍ": ["2.000.000 đ", "2.500.000 đ"]
         })
         st.table(df_vip)
 
-    # Mục B: Gói Tiêu Chuẩn
+    st.write("") # Tạo khoảng trống
+
     with st.container(border=True):
-        st.subheader("🅱️ GÓI TIÊU CHUẨN: HỌC PHÍ + HỒ SƠ")
-        st.write("✅ **Bao gồm:** Học phí đào tạo (Lý thuyết + Thực hành) và Lệ phí hoàn thiện hồ sơ đăng ký thi.")
+        st.subheader("🅱️ GÓI TIÊU CHUẨN (HỌC PHÍ + HỒ SƠ)")
+        st.write("✅ **Bao gồm:** Học phí + Phí làm hồ sơ đăng ký thi.")
         
+        # Dữ liệu bảng Tiêu chuẩn
         df_std = pd.DataFrame({
-            "Hạng Xe": ["Hạng A1 (Xe máy dưới 175cc)", "Hạng A (Mô tô PKL trên 175cc)"],
-            "Chi Tiết Phí": ["Học phí: 240.000đ + Phí hồ sơ: 560.000đ", "Học phí: 1.400.000đ + Phí hồ sơ: 800.000đ"],
-            "Tổng Trọn Gói": ["800.000 đ", "2.200.000 đ"]
+            "HẠNG XE": ["Hạng A1 (Xe máy < 175cc)", "Hạng A (Mô tô PKL > 175cc)"],
+            "CHI TIẾT PHÍ": ["Học phí: 240k + Hồ sơ: 560k", "Học phí: 1.4tr + Hồ sơ: 800k"],
+            "TỔNG CỘNG": ["800.000 đ", "2.200.000 đ"]
         })
         st.table(df_std)
         
-        st.warning("""
-        ⛔ **Lưu ý quan trọng:** Gói tiêu chuẩn CHƯA BAO GỒM:
-        * Lệ phí thi sát hạch.
-        * Lệ phí cấp bằng lái xe.
-        *(Hai khoản này học viên nộp trực tiếp tại sân thi theo quy định nhà nước)*
-        """)
+        st.error("⛔ **Lưu ý:** Gói này CHƯA bao gồm Lệ phí thi sát hạch & Lệ phí cấp bằng (Nộp tại sân thi).")
 
-    # Mục Hồ sơ
-    with st.expander("📋 HỒ SƠ CẦN CHUẨN BỊ (Xem chi tiết)", expanded=False):
+    with st.expander("📋 XEM HỒ SƠ CẦN CHUẨN BỊ (Click để xem)", expanded=False):
         st.markdown("""
-        1.  **01 Bản CMND/CCCD** (photo không cần công chứng).
-        2.  **01 Giấy khám sức khỏe** dành cho người lái xe (theo mẫu Bộ Y Tế).
-        3.  **06 Ảnh thẻ 3x4 nền xanh** (Được chụp trực tiếp tại trung tâm khi đăng ký).
+        * **01 Bản CMND/CCCD** (photo không cần công chứng).
+        * **01 Giấy khám sức khỏe** lái xe (theo mẫu Bộ Y Tế).
+        * **06 Ảnh thẻ 3x4 nền xanh** (Chụp miễn phí tại trung tâm).
         """)
 
-# --- TAB 3: LỊCH HỌC ---
+# --- TAB 3: LỊCH HỌC (CHỮ TO - RÕ) ---
 with tab3:
     st.header("⏰ Thời Gian Làm Việc")
-    st.info("📅 **Ngày làm việc:** Thứ 2 đến Thứ 7 hàng tuần.")
-    st.write("☀️ **Sáng:** 08:00 - 11:00 | 🌤️ **Chiều:** 13:00 - 17:00")
-    st.write("Học viên học Lý thuyết chuyên sâu được sắp xếp lịch linh hoạt.")
+    
+    # Dùng st.info và st.warning để làm nổi bật khung giờ
+    col_gio1, col_gio2 = st.columns(2)
+    with col_gio1:
+        st.info("""
+        **📅 NGÀY LÀM VIỆC**
+        
+        Thứ 2 đến Thứ 7 hàng tuần.
+        (Chủ nhật nghỉ)
+        """)
+    with col_gio2:
+        st.warning("""
+        **🕒 GIỜ LÀM VIỆC**
+        
+        * **Sáng:** 08:00 - 11:00
+        * **Chiều:** 13:00 - 17:00
+        """)
+        
+    st.success("🎓 **Đặc biệt:** Học viên đăng ký Gói VIP sẽ được sắp xếp lịch học linh động theo thời gian rảnh!")
 
 # --- TAB 4: HỌC ONLINE ---
 with tab4:
@@ -165,10 +187,10 @@ with tab4:
         c_xm, c_oto = st.columns(2)
         with c_xm:
             st.subheader("🛵 Hạng Xe Máy")
-            st.link_button("👉 Học 250 Câu Xe Máy", "https://daotaolaixehd.com.vn/bo-de-250-cau-ly-thuyet-thi-lai-xe-may", type="primary", use_container_width=True)
+            st.link_button("👉 Vào Học 250 Câu Xe Máy", "https://daotaolaixehd.com.vn/bo-de-250-cau-ly-thuyet-thi-lai-xe-may", type="primary", use_container_width=True)
         with c_oto:
             st.subheader("🚗 Hạng Ô Tô")
-            st.link_button("👉 Học 600 Câu Ô Tô", "https://daotaolaixehd.com.vn/600-cau-hoc-ly-thuyet-thi-lai-xe", type="primary", use_container_width=True)
+            st.link_button("👉 Vào Học 600 Câu Ô Tô", "https://daotaolaixehd.com.vn/600-cau-hoc-ly-thuyet-thi-lai-xe", type="primary", use_container_width=True)
 
 # --- TAB 5: THI THỬ ---
 with tab5:
@@ -183,7 +205,7 @@ with tab6:
     <div class="contact-box">
         <h3>👤 Trung Tâm Đào Tạo Lái Xe Phương Thúy</h3>
         <p><b>📍 Địa chỉ:</b> Khóm 8, P7, Thành Phố Trà Vinh</p>
-        <p><b>☎️ Hotline/Zalo:</b> <span style="color:red; font-weight:bold; font-size:18px">0939.838.175</span></p>
+        <p><b>☎️ Hotline/Zalo:</b> <span style="color:red; font-weight:bold; font-size:24px">0939.838.175</span></p>
     </div>
     """, unsafe_allow_html=True)
     st.map(latitude=9.9328, longitude=106.3444, zoom=14)
