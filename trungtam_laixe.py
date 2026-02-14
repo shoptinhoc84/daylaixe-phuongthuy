@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- 2. CSS TÙY CHỈNH (NÂNG CẤP GIAO DIỆN MOBILE & DESKTOP) ---
+# --- 2. CSS TÙY CHỈNH (NÂNG CẤP: CHỐNG XUỐNG DÒNG TRÊN MOBILE) ---
 st.markdown("""
     <style>
         /* Import font chữ chuẩn đẹp */
@@ -20,14 +20,9 @@ st.markdown("""
             font-family: 'Roboto', sans-serif;
         }
         
-        /* --- MÀU SẮC CHỦ ĐẠO --- */
         h1, h2, h3 { color: #004e92; font-weight: 800; }
 
-        /* =============================================
-           CẤU HÌNH CHO MÁY TÍNH (MÀN HÌNH LỚN)
-           ============================================= */
-        
-        /* Menu Tabs to rõ */
+        /* --- CẤU HÌNH CHUNG CHO PC --- */
         .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
             font-size: 1.3rem; 
             font-weight: 700;
@@ -39,60 +34,71 @@ st.markdown("""
         .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
             border-bottom-color: #ff4b4b !important; border-bottom-width: 4px !important;
         }
-
-        /* Nội dung văn bản & Bảng */
-        div[class*="stMarkdown"] p, li, .stAlert {
-            font-size: 1.25rem !important; 
-            line-height: 1.6 !important;
-        }
-        div[data-testid="stTable"] table { font-size: 1.25rem !important; }
+        
+        /* Bảng giá trên PC */
         div[data-testid="stTable"] th {
-            background-color: #004e92 !important; color: white !important; font-size: 1.3rem !important;
+            background-color: #004e92 !important; color: white !important; font-size: 1.2rem !important;
         }
+        div[data-testid="stTable"] td { font-size: 1.15rem !important; }
 
         /* =============================================
            CẤU HÌNH RIÊNG CHO ĐIỆN THOẠI (MOBILE)
-           (Màn hình nhỏ hơn 768px)
            ============================================= */
         @media only screen and (max-width: 768px) {
             
-            /* 1. Ép Menu Tabs phải TO trên điện thoại */
+            /* 1. Menu Tabs: To, Rõ, Lướt ngang */
             .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
-                font-size: 18px !important; /* Chữ to 18px không bị co nhỏ */
-                white-space: nowrap; /* Không xuống dòng chữ trong menu */
+                font-size: 18px !important;
+                white-space: nowrap; /* Không xuống dòng tên Tab */
             }
-            
-            /* Cho phép menu cuộn ngang nếu không đủ chỗ, nhưng chữ vẫn to */
             .stTabs [data-baseweb="tab-list"] {
                 overflow-x: auto;
                 flex-wrap: nowrap;
+                scrollbar-width: none; /* Ẩn thanh cuộn cho đẹp */
             }
 
             /* 2. Tiêu đề to rõ */
-            h1 { font-size: 26px !important; text-align: center; }
-            h2, h3 { font-size: 22px !important; }
+            h1 { font-size: 24px !important; text-align: center; }
+            h2, h3 { font-size: 20px !important; }
 
-            /* 3. Nội dung văn bản dễ đọc, không bị lí nhí */
+            /* 3. Nội dung văn bản */
             div[class*="stMarkdown"] p, li, .stAlert {
-                font-size: 16px !important; /* Cỡ chữ chuẩn đọc báo trên đt */
+                font-size: 16px !important;
                 text-align: justify;
+                line-height: 1.5 !important;
             }
 
-            /* 4. Bảng giá cho phép cuộn ngang, chữ vẫn to */
-            div[data-testid="stTable"] { overflow-x: auto; }
-            div[data-testid="stTable"] table { 
-                font-size: 16px !important; 
-                min-width: 500px; /* Ép bảng rộng ra để không bị nát chữ */
+            /* 4. XỬ LÝ BẢNG GIÁ (QUAN TRỌNG NHẤT) */
+            div[data-testid="stTable"] {
+                overflow-x: auto; /* Cho phép lướt ngang */
+            }
+            div[data-testid="stTable"] table {
+                width: 100%;
+            }
+            div[data-testid="stTable"] th, div[data-testid="stTable"] td {
+                white-space: nowrap !important; /* CẤM XUỐNG DÒNG */
+                font-size: 16px !important;     /* Chữ to dễ đọc */
+                padding: 10px 15px !important;  /* Giãn cách thoáng */
+            }
+            /* Tô màu cột đầu tiên để dễ nhìn làm mốc */
+            div[data-testid="stTable"] td:first-child {
+                font-weight: bold;
+                color: #004e92;
+                position: sticky;
+                left: 0;
+                background-color: #f9f9f9; /* Cố định cột đầu nếu cần, hoặc để thường */
             }
             
-            /* 5. Nút bấm (Link Button) to ra để dễ ấn */
+            /* 5. Nút bấm to ra */
             div[data-testid="stLinkButton"] > a {
                 font-size: 18px !important;
-                padding: 10px 20px !important;
+                padding: 12px 0px !important;
+                width: 100% !important; /* Nút bấm full chiều rộng */
+                text-align: center !important;
             }
         }
 
-        /* --- KHUNG LIÊN HỆ --- */
+        /* Khung liên hệ */
         .contact-box {
             background-color: #e8f4fd;
             padding: 20px;
@@ -115,7 +121,6 @@ def hien_thi_anh(ten_file, caption=None):
 
 # --- 4. NỘI DUNG CHÍNH ---
 
-# Header
 st.title("🚗 HỆ THỐNG ĐÀO TẠO LÁI XE PHƯƠNG THÚY")
 st.markdown("**📍 Địa chỉ:** Khóm 8, P7, Thành Phố Trà Vinh | **📞 Hotline:** 0939.838.175")
 st.divider()
@@ -141,18 +146,19 @@ with tab1:
         hien_thi_anh("3.jpg", caption="Phòng Máy Hiện Đại")
         st.warning("Hệ thống máy tính cấu hình cao, phần mềm thi sát hạch chuẩn.")
 
-# --- TAB 2: BẢNG GIÁ ---
+# --- TAB 2: BẢNG GIÁ (FIX LỖI XUỐNG DÒNG) ---
 with tab2:
     st.header("💰 Bảng Báo Giá Dịch Vụ")
     st.caption("Lưu ý: Giá trên chưa bao gồm VAT.")
 
     with st.container(border=True):
-        st.subheader("🅰️ GÓI VIP: ÔN LÝ THUYẾT (KÈM RIÊNG)")
-        st.info("💡 **Quyền lợi:** Học 1 kèm 1, học là đậu lý thuyết, tặng phần mềm ôn thi.")
+        st.subheader("🅰️ GÓI VIP: KÈM RIÊNG")
+        st.info("💡 **Quyền lợi:** Học 1 kèm 1, học là đậu lý thuyết, tặng phần mềm.")
         
+        # Dữ liệu bảng VIP - Viết gọn hơn để hiển thị đẹp
         df_vip = pd.DataFrame({
-            "DỊCH VỤ": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B.01, B, C1)"],
-            "ĐỐI TƯỢNG": ["Học viên thi A1, A", "Học viên thi B.01, B, C1"],
+            "DỊCH VỤ": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B, C)"],
+            "ĐỐI TƯỢNG": ["Học viên thi A1, A", "Học viên thi B1, B2, C1"],
             "CHI PHÍ": ["2.000.000 đ", "2.500.000 đ"]
         })
         st.table(df_vip)
@@ -164,15 +170,15 @@ with tab2:
         st.write("✅ **Bao gồm:** Học phí + Phí làm hồ sơ đăng ký thi.")
         
         df_std = pd.DataFrame({
-            "HẠNG XE": ["Hạng A1 (Xe máy < 175cc)", "Hạng A (Mô tô PKL > 175cc)"],
+            "HẠNG XE": ["Hạng A1 (< 175cc)", "Hạng A (> 175cc)"],
             "CHI TIẾT PHÍ": ["Học phí: 240k + Hồ sơ: 560k", "Học phí: 1.4tr + Hồ sơ: 800k"],
-            "TỔNG CỘNG": ["800.000 đ", "2.200.000 đ"]
+            "TRỌN GÓI": ["800.000 đ", "2.200.000 đ"]
         })
         st.table(df_std)
         
         st.error("⛔ **Lưu ý:** Gói này CHƯA bao gồm Lệ phí thi sát hạch & Lệ phí cấp bằng (Nộp tại sân thi).")
 
-    with st.expander("📋 XEM HỒ SƠ CẦN CHUẨN BỊ (Click để xem)", expanded=False):
+    with st.expander("📋 XEM HỒ SƠ CẦN CHUẨN BỊ", expanded=False):
         st.markdown("""
         * **01 Bản CMND/CCCD** (photo không cần công chứng).
         * **01 Giấy khám sức khỏe** lái xe (theo mẫu Bộ Y Tế).
@@ -185,7 +191,7 @@ with tab3:
     
     col_gio1, col_gio2 = st.columns(2)
     with col_gio1:
-        st.info("**📅 NGÀY LÀM VIỆC**\n\nThứ 2 đến Thứ 7 hàng tuần (Chủ nhật nghỉ)")
+        st.info("**📅 NGÀY LÀM VIỆC**\n\nThứ 2 đến Thứ 7 hàng tuần\n(Chủ nhật nghỉ)")
     with col_gio2:
         st.warning("**🕒 GIỜ LÀM VIỆC**\n\n* **Sáng:** 08:00 - 11:00\n* **Chiều:** 13:00 - 17:00")
         
