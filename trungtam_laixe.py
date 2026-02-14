@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- 2. CSS TÙY CHỈNH (NÂNG CẤP GIAO DIỆN TO - RÕ) ---
+# --- 2. CSS TÙY CHỈNH (NÂNG CẤP GIAO DIỆN MOBILE & DESKTOP) ---
 st.markdown("""
     <style>
         /* Import font chữ chuẩn đẹp */
@@ -20,12 +20,16 @@ st.markdown("""
             font-family: 'Roboto', sans-serif;
         }
         
-        /* --- TIÊU ĐỀ --- */
+        /* --- MÀU SẮC CHỦ ĐẠO --- */
         h1, h2, h3 { color: #004e92; font-weight: 800; }
 
-        /* --- MENU TABS (TO & ĐẸP) --- */
+        /* =============================================
+           CẤU HÌNH CHO MÁY TÍNH (MÀN HÌNH LỚN)
+           ============================================= */
+        
+        /* Menu Tabs to rõ */
         .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
-            font-size: 1.3rem; /* Cỡ chữ Menu to */
+            font-size: 1.3rem; 
             font-weight: 700;
         }
         .stTabs [data-baseweb="tab-list"] button { color: #004e92; }
@@ -36,44 +40,64 @@ st.markdown("""
             border-bottom-color: #ff4b4b !important; border-bottom-width: 4px !important;
         }
 
-        /* --- NỘI DUNG VĂN BẢN (CHỈNH SỬA MỚI) --- */
-        
-        /* 1. Tăng cỡ chữ cho toàn bộ nội dung văn bản (Lịch học, thông báo...) */
-        div[class*="stMarkdown"] p, div[class*="stMarkdown"] li, .stAlert {
-            font-size: 1.25rem !important; /* Chữ to ~20px đọc cực rõ */
-            line-height: 1.6 !important;    /* Giãn dòng cho thoáng */
-            color: #333333;                 /* Màu chữ đen rõ nét */
+        /* Nội dung văn bản & Bảng */
+        div[class*="stMarkdown"] p, li, .stAlert {
+            font-size: 1.25rem !important; 
+            line-height: 1.6 !important;
+        }
+        div[data-testid="stTable"] table { font-size: 1.25rem !important; }
+        div[data-testid="stTable"] th {
+            background-color: #004e92 !important; color: white !important; font-size: 1.3rem !important;
         }
 
-        /* 2. Tùy chỉnh Bảng Giá (Table) cho đẹp và to */
-        div[data-testid="stTable"] table {
-            font-size: 1.25rem !important; /* Chữ trong bảng to lên */
-            width: 100%;
-        }
-        div[data-testid="stTable"] th {
-            background-color: #004e92 !important; /* Tiêu đề bảng màu xanh */
-            color: white !important;              /* Chữ trắng nổi bật */
-            font-size: 1.3rem !important;
-            padding: 12px !important;
-        }
-        div[data-testid="stTable"] td {
-            padding: 12px !important;             /* Giãn cách các ô cho thoáng */
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        /* 3. Hiệu ứng khi rê chuột vào dòng trong bảng */
-        div[data-testid="stTable"] tr:hover td {
-            background-color: #f0f8ff;            /* Đổi màu nền nhẹ khi chỉ vào */
-            cursor: pointer;
+        /* =============================================
+           CẤU HÌNH RIÊNG CHO ĐIỆN THOẠI (MOBILE)
+           (Màn hình nhỏ hơn 768px)
+           ============================================= */
+        @media only screen and (max-width: 768px) {
+            
+            /* 1. Ép Menu Tabs phải TO trên điện thoại */
+            .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
+                font-size: 18px !important; /* Chữ to 18px không bị co nhỏ */
+                white-space: nowrap; /* Không xuống dòng chữ trong menu */
+            }
+            
+            /* Cho phép menu cuộn ngang nếu không đủ chỗ, nhưng chữ vẫn to */
+            .stTabs [data-baseweb="tab-list"] {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            /* 2. Tiêu đề to rõ */
+            h1 { font-size: 26px !important; text-align: center; }
+            h2, h3 { font-size: 22px !important; }
+
+            /* 3. Nội dung văn bản dễ đọc, không bị lí nhí */
+            div[class*="stMarkdown"] p, li, .stAlert {
+                font-size: 16px !important; /* Cỡ chữ chuẩn đọc báo trên đt */
+                text-align: justify;
+            }
+
+            /* 4. Bảng giá cho phép cuộn ngang, chữ vẫn to */
+            div[data-testid="stTable"] { overflow-x: auto; }
+            div[data-testid="stTable"] table { 
+                font-size: 16px !important; 
+                min-width: 500px; /* Ép bảng rộng ra để không bị nát chữ */
+            }
+            
+            /* 5. Nút bấm (Link Button) to ra để dễ ấn */
+            div[data-testid="stLinkButton"] > a {
+                font-size: 18px !important;
+                padding: 10px 20px !important;
+            }
         }
 
         /* --- KHUNG LIÊN HỆ --- */
         .contact-box {
             background-color: #e8f4fd;
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
             border-left: 8px solid #004e92;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
     </style>
 """, unsafe_allow_html=True)
@@ -117,7 +141,7 @@ with tab1:
         hien_thi_anh("3.jpg", caption="Phòng Máy Hiện Đại")
         st.warning("Hệ thống máy tính cấu hình cao, phần mềm thi sát hạch chuẩn.")
 
-# --- TAB 2: BẢNG GIÁ (CHỮ TO - RÕ) ---
+# --- TAB 2: BẢNG GIÁ ---
 with tab2:
     st.header("💰 Bảng Báo Giá Dịch Vụ")
     st.caption("Lưu ý: Giá trên chưa bao gồm VAT.")
@@ -126,7 +150,6 @@ with tab2:
         st.subheader("🅰️ GÓI VIP: ÔN LÝ THUYẾT (KÈM RIÊNG)")
         st.info("💡 **Quyền lợi:** Học 1 kèm 1, học là đậu lý thuyết, tặng phần mềm ôn thi.")
         
-        # Dữ liệu bảng VIP
         df_vip = pd.DataFrame({
             "DỊCH VỤ": ["Ôn lý thuyết Xe máy (A1, A)", "Ôn lý thuyết Ô tô (B.01, B, C1)"],
             "ĐỐI TƯỢNG": ["Học viên thi A1, A", "Học viên thi B.01, B, C1"],
@@ -134,13 +157,12 @@ with tab2:
         })
         st.table(df_vip)
 
-    st.write("") # Tạo khoảng trống
+    st.write("") 
 
     with st.container(border=True):
         st.subheader("🅱️ GÓI TIÊU CHUẨN (HỌC PHÍ + HỒ SƠ)")
         st.write("✅ **Bao gồm:** Học phí + Phí làm hồ sơ đăng ký thi.")
         
-        # Dữ liệu bảng Tiêu chuẩn
         df_std = pd.DataFrame({
             "HẠNG XE": ["Hạng A1 (Xe máy < 175cc)", "Hạng A (Mô tô PKL > 175cc)"],
             "CHI TIẾT PHÍ": ["Học phí: 240k + Hồ sơ: 560k", "Học phí: 1.4tr + Hồ sơ: 800k"],
@@ -157,26 +179,15 @@ with tab2:
         * **06 Ảnh thẻ 3x4 nền xanh** (Chụp miễn phí tại trung tâm).
         """)
 
-# --- TAB 3: LỊCH HỌC (CHỮ TO - RÕ) ---
+# --- TAB 3: LỊCH HỌC ---
 with tab3:
     st.header("⏰ Thời Gian Làm Việc")
     
-    # Dùng st.info và st.warning để làm nổi bật khung giờ
     col_gio1, col_gio2 = st.columns(2)
     with col_gio1:
-        st.info("""
-        **📅 NGÀY LÀM VIỆC**
-        
-        Thứ 2 đến Thứ 7 hàng tuần.
-        (Chủ nhật nghỉ)
-        """)
+        st.info("**📅 NGÀY LÀM VIỆC**\n\nThứ 2 đến Thứ 7 hàng tuần (Chủ nhật nghỉ)")
     with col_gio2:
-        st.warning("""
-        **🕒 GIỜ LÀM VIỆC**
-        
-        * **Sáng:** 08:00 - 11:00
-        * **Chiều:** 13:00 - 17:00
-        """)
+        st.warning("**🕒 GIỜ LÀM VIỆC**\n\n* **Sáng:** 08:00 - 11:00\n* **Chiều:** 13:00 - 17:00")
         
     st.success("🎓 **Đặc biệt:** Học viên đăng ký Gói VIP sẽ được sắp xếp lịch học linh động theo thời gian rảnh!")
 
@@ -213,4 +224,3 @@ with tab6:
 # --- FOOTER ---
 st.markdown("---")
 st.markdown("<div style='text-align: center; color: grey;'>© 2026 Hệ Thống Đào Tạo Lái Xe Phương Thúy</div>", unsafe_allow_html=True)
-
